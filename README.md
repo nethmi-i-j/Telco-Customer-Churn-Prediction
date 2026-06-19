@@ -61,7 +61,7 @@ Optimized for mean F1 score across the same 5-fold CV split
 
 Evaluated precision/recall/F1 trade-offs across thresholds (0.25–0.50)
 
-Selected threshold = 0.40 as the operating point — better suited to retention campaigns, where catching more potential churners (recall) is prioritized over precision
+Selected threshold = 0.35 as the operating point — better suited to retention campaigns, where catching more potential churners (recall) is prioritized over precision
 
 ## Final Evaluation & Deployment
 
@@ -75,7 +75,7 @@ Wrapped in a FastAPI service for real-time inference (see Running the FastAPI Se
 
 Final tuned XGBoost performance on the held-out test set at threshold = 0.40:
 
-Accuracy - 75.0%, Precision - 51.8%, Recall - 80.2%  F1 Score - 63.0%  ROC-AUC - 84.5%
+Accuracy - 74.02%, Precision - 50.67%, Recall - 81.28%  F1 Score - 62.42%  ROC-AUC - 84.38%
 
 Top insight: Contract type — particularly month-to-month contracts — is the strongest driver of churn, followed by tenure and internet service type.
 
@@ -133,7 +133,7 @@ Class imbalance handling: SMOTE (applied within the cross-validation pipeline to
 
 Hyperparameter tuning: Optuna, 50 trials, optimized for F1 score
 
-Decision threshold: 0.40 (tuned for recall-oriented retention use case)
+Decision threshold: 0.35 (tuned for recall-oriented retention use case)
 
 Serialization: joblib, saved as a full pipeline (preprocessing → SMOTE → model) so raw, unprocessed customer records can be passed directly to the API
 
