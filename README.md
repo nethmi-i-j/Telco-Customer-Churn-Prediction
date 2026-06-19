@@ -84,15 +84,15 @@ Note: The default 0.5 threshold favors precision; 0.4 was chosen deliberately to
 
 ## Running the FastAPI Service
 
-The trained pipeline (telco_customer_churn_xgboost_model.joblib) is loaded once at startup and served via a /predict endpoint in main.py.
+The trained pipeline (telco_customer_churn_xgboost_model.joblib) is loaded once at startup and served via a /customer_churn_prediction endpoint in main.py.
 
-bashuvicorn main:app --reload
+uvicorn main:app 
 
 The API will be available at http://127.0.0.1:8000, with interactive Swagger docs at http://127.0.0.1:8000/docs.
 
 Making Predictions via the API
 
-Endpoint: POST /predict
+Endpoint: POST /customer_churn_prediction
 
 Request body:
 
@@ -103,7 +103,7 @@ json{
   "Dependents": "No",
   "tenure": 1,
   "PhoneService": "No",
-  "MultipleLines": "No phone service",
+  "MultipleLines": "No",
   "InternetService": "DSL",
   "OnlineSecurity": "No",
   "OnlineBackup": "Yes",
@@ -111,9 +111,9 @@ json{
   "TechSupport": "No",
   "StreamingTV": "No",
   "StreamingMovies": "No",
-  "Contract": "Month-to-Month",
+  "Contract": "Month-to-month",
   "PaperlessBilling": "Yes",
-  "PaymentMethod": "Electronic check",
+  "PaymentMethod": "Bank transfer",
   "MonthlyCharges": 29.85,
   "TotalCharges": 29.85
 }
@@ -121,35 +121,9 @@ json{
 Response:
 
 json{
-  "churn_probability": 0.7421,
-  "prediction": "Churn"
+  "label": 1,
+  "result": "Churn"
 }
-
-Example with curl:
-
-bashcurl -X POST "http://127.0.0.1:8000/predict" \
-  -H "Content-Type: application/json" \
-  -d '{
-        "gender": "Female",
-        "SeniorCitizen": "No",
-        "Partner": "Yes",
-        "Dependents": "No",
-        "tenure": 1,
-        "PhoneService": "No",
-        "MultipleLines": "No phone service",
-        "InternetService": "DSL",
-        "OnlineSecurity": "No",
-        "OnlineBackup": "Yes",
-        "DeviceProtection": "No",
-        "TechSupport": "No",
-        "StreamingTV": "No",
-        "StreamingMovies": "No",
-        "Contract": "Month-to-Month",
-        "PaperlessBilling": "Yes",
-        "PaymentMethod": "Electronic check",
-        "MonthlyCharges": 29.85,
-        "TotalCharges": 29.85
-      }'
 
 ## Model Details
 
